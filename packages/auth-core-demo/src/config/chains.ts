@@ -21,7 +21,7 @@ function convertToDefineChain(particleChains: ChainInfo[]): ViemChain[] {
             blockExplorers: {
                 default: { name: 'Explorer', url: chain.blockExplorerUrl },
             },
-            testnet: true,
+            testnet: chain.network?.toLowerCase() !== 'mainnet',
             custom: {
                 chainType: [101, 102, 103].includes(chain.id) ? 'solana' : 'evm',
                 network: chain.network,

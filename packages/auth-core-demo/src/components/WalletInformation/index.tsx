@@ -130,13 +130,13 @@ export const WalletInformation = () => {
         }
     }, [address, erc4337, chainInfo, aaNetworkConfig]);
 
-    // const chainOptions = useMemo(() => {
-    //     const options = getAllChainInfos().filter((item) => item.name !== 'Solana');
-    //     if (erc4337) {
-    //         return options.filter((item) => item.chainType === 'evm' && aaNetworkConfig.includes(item.id));
-    //     }
-    //     return options;
-    // }, [erc4337, aaNetworkConfig]);
+    const chainOptions = useMemo(() => {
+        const options = getEvmChains().filter((item) => item.name !== 'Solana');
+        if (erc4337) {
+            return options.filter((item) => aaNetworkConfig.includes(item.id));
+        }
+        return options;
+    }, [erc4337, aaNetworkConfig]);
 
     const { run: runSwitchChain, loading: switchChainLoading } = useRequest(switchChain, {
         manual: true,
@@ -151,10 +151,6 @@ export const WalletInformation = () => {
             message.error(error.message || error);
         },
     });
-
-    const evmChians = useMemo(() => {
-        return getEvmChains();
-    }, []);
 
     const solanaChains = useMemo(() => {
         return getSolanaChains();
@@ -183,7 +179,7 @@ export const WalletInformation = () => {
                             filterOption={(input, option) => {
                                 return (option?.label ?? '').toLowerCase().includes(input.toLowerCase());
                             }}
-                            options={evmChians.map((item) => ({
+                            options={chainOptions.map((item) => ({
                                 ...item,
                                 label: item.name,
                                 value: item.id,
