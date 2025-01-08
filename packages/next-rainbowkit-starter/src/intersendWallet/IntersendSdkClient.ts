@@ -1,6 +1,5 @@
 import { createWalletClient, custom, type WalletClient } from 'viem';
 import { polygon } from 'viem/chains';
-import { type IEthereum } from '@dynamic-labs/ethereum';
 import { EventEmitter } from 'events';
 
 interface IntersendInfo {
@@ -8,7 +7,7 @@ interface IntersendInfo {
   chainId: number;
 }
 
-// Create a proper provider type that extends IEthereum
+
 class IntersendProvider extends EventEmitter {
   public readonly isIntersend = true;
   public readonly selectedAddress: string | null = null;
@@ -150,7 +149,7 @@ export class IntersendSdkClient {
   };
 
   static getProvider = () => {
-    return IntersendSdkClient.provider as unknown as IEthereum;
+    return IntersendSdkClient.provider as unknown;
   };
 
   static getWalletClient = () => {
